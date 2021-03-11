@@ -4,10 +4,6 @@ const api = {
 }
 const searchArea = document.getElementById('search-area');
 const searchBtn = document.getElementById('btn-search');
-const weatherIcon = document.getElementById('weather-icon');
-const cityName = document.getElementById('city');
-const temperature = document.getElementById('temperature');
-const weather = document.getElementById('weather');
 
 const getWeatherData = async (api) => {
     try {
@@ -15,16 +11,25 @@ const getWeatherData = async (api) => {
         const data = await response.json();
         updateWeatherInfo(data)
     } catch (err) {
-        console.log(err);
+        displayError('Data Not Found!');
     }
 }
 
 const updateWeatherInfo = (data) => {
+    const weatherIcon = document.getElementById('weather-icon');
+    const cityName = document.getElementById('city');
+    const temperature = document.getElementById('temperature');
+    const weather = document.getElementById('weather');
+    
     weatherIcon.setAttribute('src', `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
     temperature.innerText = data.main.temp;
     cityName.innerText = `${data.name}, ${data.sys.country}`;
     weather.innerText = data.weather[0].main;
     searchArea.value = '';
+}
+
+const displayError = (errMsg) => {
+    document.getElementById('weatherContent').innerHTML = `<h1>${errMsg}</h1>`
 }
 
 searchBtn.addEventListener('click', () => {
