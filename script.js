@@ -2,9 +2,9 @@ const api = {
     base: 'http://api.openweathermap.org/',
     key: 'c57da449203d8fc145b84d8e1c5fefdc'
 }
-let weatherAPI = `${api.base}data/2.5/weather?q=dhaka&appid=${api.key}`;
 const searchArea = document.getElementById('search-area');
 const searchBtn = document.getElementById('btn-search');
+let weatherAPI = `${api.base}data/2.5/weather?q=dhaka&appid=${api.key}`;
 
 const getWeatherData = async (api) => {
     try {
@@ -33,8 +33,10 @@ const displayError = (errMsg) => {
     document.getElementById('weatherContent').innerHTML = `<h1>${errMsg}</h1>`
 }
 
+// Display the Weather of Dhaka
 getWeatherData(weatherAPI);
 
+// Display the Weather according to Searching
 searchBtn.addEventListener('click', () => {
     let searchingCity = searchArea.value;
     if (searchingCity) {
@@ -42,7 +44,7 @@ searchBtn.addEventListener('click', () => {
         if (searchingCity.includes(' ')) {
             searchingCity = searchingCity.replace(' ', '+');
         }
+        weatherAPI = `${api.base}data/2.5/weather?q=${searchingCity}&appid=${api.key}`;
+        getWeatherData(weatherAPI);
     }
-    weatherAPI = `${api.base}data/2.5/weather?q=${searchingCity}&appid=${api.key}`;
-    getWeatherData(weatherAPI);
 });
