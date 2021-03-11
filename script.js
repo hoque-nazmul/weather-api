@@ -2,6 +2,7 @@ const api = {
     base: 'http://api.openweathermap.org/',
     key: 'c57da449203d8fc145b84d8e1c5fefdc'
 }
+let weatherAPI = `${api.base}data/2.5/weather?q=dhaka&appid=${api.key}`;
 const searchArea = document.getElementById('search-area');
 const searchBtn = document.getElementById('btn-search');
 
@@ -20,7 +21,7 @@ const updateWeatherInfo = (data) => {
     const cityName = document.getElementById('city');
     const temperature = document.getElementById('temperature');
     const weather = document.getElementById('weather');
-    
+
     weatherIcon.setAttribute('src', `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
     temperature.innerText = data.main.temp;
     cityName.innerText = `${data.name}, ${data.sys.country}`;
@@ -32,6 +33,8 @@ const displayError = (errMsg) => {
     document.getElementById('weatherContent').innerHTML = `<h1>${errMsg}</h1>`
 }
 
+getWeatherData(weatherAPI);
+
 searchBtn.addEventListener('click', () => {
     let searchingCity = searchArea.value;
     if (searchingCity) {
@@ -40,6 +43,6 @@ searchBtn.addEventListener('click', () => {
             searchingCity = searchingCity.replace(' ', '+');
         }
     }
-    const weatherAPI = `${api.base}data/2.5/weather?q=${searchingCity}&appid=${api.key}`;
+    weatherAPI = `${api.base}data/2.5/weather?q=${searchingCity}&appid=${api.key}`;
     getWeatherData(weatherAPI);
 });
